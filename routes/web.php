@@ -33,5 +33,6 @@ Route::middleware('auth')->group(function () {
 Route::post('/boxes', [BoxController::class, 'store'])->name('boxes.store');
 Route::get('/dashboard', [BoxController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::delete('/boxes/{box}', [BoxController::class, 'destroy'])->name('boxes.destroy');
+Route::patch('/boxes/{box}', [BoxController::class, 'update'])->name('boxes.update');
 
 require __DIR__.'/auth.php';
