@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BoxController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,5 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/boxes', [BoxController::class, 'store'])->name('boxes.store');
+Route::get('/dashboard', [BoxController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::delete('/boxes/{box}', [BoxController::class, 'destroy'])->name('boxes.destroy');
 
 require __DIR__.'/auth.php';
