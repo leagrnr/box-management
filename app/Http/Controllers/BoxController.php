@@ -38,4 +38,20 @@ class BoxController extends Controller {
         $box->delete();
         return redirect()->back()->with('success', 'Box deleted successfully');
     }
+
+    public function update(Request $request, Box $box)
+    {
+        $request->validate([
+            'box_number' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'tenant_name' => 'nullable|string|max:255',
+            'surface' => 'required|numeric',
+            'price_per_month' => 'required|numeric',
+            'location' => 'required|string|max:255',
+        ]);
+
+        $box->update($request->all());
+
+        return redirect()->route('dashboard')->with('success', 'Box updated successfully');
+    }
 }

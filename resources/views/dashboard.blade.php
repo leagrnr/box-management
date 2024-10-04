@@ -63,6 +63,9 @@
                                 {{ $box->location }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <button class="bg-customOrange text-white font-bold py-2 px-4 rounded mb-2" onclick="openEditModal({{ $box }})">
+                                    {{ __('Modifier') }}
+                                </button>
                                 <form method="POST" action="{{ route('boxes.destroy', $box->id) }}" onsubmit="return confirm('Voulez-vous supprimer ce box?');">
                                     @csrf
                                     @method('DELETE')
@@ -92,10 +95,22 @@
     function toggleTenantNameInput() {
         const status = document.getElementById('status').value;
         const tenantNameInput = document.getElementById('tenant_name');
-        if (status === 'libre') {
-            tenantNameInput.disabled = true;
-        } else {
-            tenantNameInput.disabled = false;
-        }
+        tenantNameInput.disabled = status === 'libre';
+    }
+
+    function openEditModal(box) {
+        document.getElementById('edit_box_id').value = box.id;
+        document.getElementById('edit_box_number').value = box.box_number;
+        document.getElementById('edit_status').value = box.status;
+        document.getElementById('edit_tenant_name').value = box.tenant_name;
+        document.getElementById('edit_surface').value = box.surface;
+        document.getElementById('edit_price_per_month').value = box.price_per_month;
+        document.getElementById('edit_location').value = box.location;
+        document.getElementById('editBoxForm').action = `/boxes/${box.id}`;
+        document.getElementById('editBoxModal').classList.remove('hidden');
+    }
+
+        function closeEditModal() {
+        document.getElementById('editBoxModal').classList.add('hidden');
     }
 </script>
